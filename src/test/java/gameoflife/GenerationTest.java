@@ -18,6 +18,10 @@ public class GenerationTest {
         System.out.println();
         generation.updateCellsState();
         plane.printCellsStates();
+        System.out.println();
+        System.out.println();
+        generation.updateCellsState();
+        plane.printCellsStates();
     }
 
 }

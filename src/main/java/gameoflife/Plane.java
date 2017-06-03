@@ -8,8 +8,10 @@ import java.util.List;
  */
 public class Plane {
 
-    private static final int WIDTH = 11;
-    private static final int HEIGHT = 11;
+
+
+    private static final int WIDTH = 20;
+    private static final int HEIGHT = 20;
     private List<Cell> cells = new ArrayList<>();
 
     public Plane() {
@@ -24,6 +26,13 @@ public class Plane {
         }
     }
 
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
 
     public Cell getCellWithXandY(int x, int y) {
         return cells.get(getIndex(x, y));
@@ -87,7 +96,6 @@ public class Plane {
         getCellWithXandY(2, 9).setCellState(CellState.ALIVE);
         getCellWithXandY(2, 10).setCellState(CellState.ALIVE);
     }
-
 
 
     public List<Cell> backUpCurrentCells() {
