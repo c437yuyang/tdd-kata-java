@@ -34,17 +34,30 @@ public class Plane {
     }
 
 
+    public int getValueWithLowBorder(int value, int lowBorder) {
+        if (value < lowBorder) {
+            return lowBorder;
+        }
+        return value;
+    }
+
+    public int getValueWithUpBorder(int value, int upBorder) {
+        if (value > upBorder) {
+            return upBorder;
+        }
+        return value;
+    }
+
+
     public int getAliveNeighbors(Cell cell) {
         int aliveNum = 0;
-
-        int xLeft = cell.getX() - 1 < 0 ? 0 : cell.getX() - 1;
-        int xRight = cell.getX() + 1 > WIDTH - 1 ? WIDTH - 1 : cell.getX() + 1;
-        int yTop = cell.getY() - 1 < 0 ? 0 : cell.getY() - 1;
-        int yBottom = cell.getY() + 1 > HEIGHT - 1 ? HEIGHT - 1 : cell.getY() + 1;
-
+        int xLeft = getValueWithLowBorder(cell.getX() - 1, 0);
+        int xRight = getValueWithUpBorder(cell.getX() + 1, WIDTH - 1);
+        int yTop = getValueWithLowBorder(cell.getY() - 1, 0);
+        int yBottom = getValueWithUpBorder(cell.getY() + 1, HEIGHT - 1);
 
         for (int i = xLeft; i <= xRight; ++i) {
-            for (int j = yBottom; j <= yTop; ++j) {
+            for (int j = yTop; j <= yBottom; ++j) {
                 if (i == cell.getX() && j == cell.getY()) {
                     continue;
                 }
@@ -57,10 +70,15 @@ public class Plane {
     }
 
     public void setAliveCells() {
-        getCellWithXandY(1,1).setCellState(CellState.ALIVE);
-        getCellWithXandY(2,1).setCellState(CellState.ALIVE);
-        getCellWithXandY(2,2).setCellState(CellState.ALIVE);
-        getCellWithXandY(1,2).setCellState(CellState.ALIVE);
+        getCellWithXandY(1, 1).setCellState(CellState.ALIVE);
+        getCellWithXandY(2, 1).setCellState(CellState.ALIVE);
+        getCellWithXandY(2, 2).setCellState(CellState.ALIVE);
+        getCellWithXandY(1, 2).setCellState(CellState.ALIVE);
+
+        getCellWithXandY(2, 7).setCellState(CellState.ALIVE);
+        getCellWithXandY(2, 8).setCellState(CellState.ALIVE);
+        getCellWithXandY(2, 9).setCellState(CellState.ALIVE);
+        getCellWithXandY(2, 10).setCellState(CellState.ALIVE);
     }
 
 
