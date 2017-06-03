@@ -8,14 +8,16 @@ public final class Cell {
     private final int y;
     private CellState cellState;
 
-    private Cell(int x, int y) {
+
+
+    public Cell(int x, int y) {
         this.x = x;
         this.y = y;
         cellState = CellState.DEAD;
     }
 
 
-    private Cell(int x, int y, CellState state) {
+    public Cell(int x, int y, CellState state) {
         this.x = x;
         this.y = y;
         cellState = state;
@@ -50,4 +52,24 @@ public final class Cell {
 //        }
 //    }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = true;
+        if (this.x != ((Cell) obj).getX()) {
+            result = false;
+        }
+        if (this.y != ((Cell) obj).getY()) {
+            result = false;
+        }
+        if (this.cellState != ((Cell) obj).getCellState()) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
