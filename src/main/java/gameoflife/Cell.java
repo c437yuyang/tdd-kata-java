@@ -38,23 +38,4 @@ public final class Cell {
         this.cellState = cellState;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        boolean result = true;
-//        if (this.x != ((Cell) obj).getX()) {
-//            result = false;
-//        }
-//        if (this.y != ((Cell) obj).getY()) {
-//            result = false;
-//        }
-//        if (this.cellState != ((Cell) obj).getCellState()) {
-//            result = false;
-//        }
-//        return result;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return super.hashCode();
-//    }
 }

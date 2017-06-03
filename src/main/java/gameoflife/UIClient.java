@@ -38,6 +38,7 @@ public class UIClient extends JFrame {
         int width = 600;
         int height = 600;
         setSize(width, height);
+        setResizable(false);
         int rows = Plane.getWIDTH();
         int cols = Plane.getHEIGHT();
         setLocationRelativeTo(null);
