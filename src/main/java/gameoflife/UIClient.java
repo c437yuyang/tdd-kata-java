@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class UIClient extends JFrame {
 
+    public static final int WND_WIDTH = 600;
+    public static final int WND_HEIGHT = 600;
     private Plane plane;
     private List<JButton> btnGrids = new ArrayList<>();
     private JButton btnNext = new JButton();
@@ -27,56 +29,59 @@ public class UIClient extends JFrame {
     private JButton btnEnd = new JButton();
     private boolean isRunning = false;
     private Generation generation;
-
-    private GenarationUpdateThread genarationUpdateThread;
+    private GenerationUpdateThread generationUpdateThread;
 
     public UIClient(Plane plane) {
         super();
         this.plane = plane;
         plane.setAliveCells(); //for debug
         generation = new Generation(plane); //for debug
-        int width = 600;
-        int height = 600;
-        setSize(width, height);
-        setResizable(false);
-        int rows = Plane.getWIDTH();
-        int cols = Plane.getHEIGHT();
-        setLocationRelativeTo(null);
+        initWindow();
+        updateGridsColorByCells();
+        setVisible(true);
+    }
 
+    private void initWindow() {
+        setSize(WND_WIDTH, WND_HEIGHT);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
         Panel panelGrids = new Panel();
         Panel panelControl = new Panel();
-        setLayout(new BorderLayout());
         add(panelGrids);
         add(panelControl, BorderLayout.AFTER_LAST_LINE);
-
-        btnNext.setText("Next Generation");
-        btnStart.setText("Start");
-        btnEnd.setText("End");
-        btnEnd.setEnabled(false);
-
-        panelControl.add(btnNext);
-        panelControl.add(btnStart);
-        panelControl.add(btnEnd);
-
-        panelGrids.setLayout(new GridLayout(rows, cols));
-
+        initControlPanel(panelControl);
+        initGridPanel(panelGrids);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    private void initGridPanel(Panel panelGrids) {
+        int rows = Plane.getWIDTH();
+        int cols = Plane.getHEIGHT();
+        panelGrids.setLayout(new GridLayout(rows, cols));
 
         for (int i = 0; i < rows * cols; i++) { //init buttons
             JButton button = new JButton();
             btnGrids.add(button);
             panelGrids.add(button);
-            addGribBtnClickEvent(button);
+            addGridBtnClickEvent(button);
         }
-        updateGridsColorByCells();
+    }
+
+    private void initControlPanel(Panel panelControl) {
+        btnNext.setText("Next Generation");
+        btnStart.setText("Start");
+        btnEnd.setText("End");
+        btnEnd.setEnabled(false);
+        panelControl.add(btnNext);
+        panelControl.add(btnStart);
+        panelControl.add(btnEnd);
         addStartBtnClickEvent();
         addNextBtnClickEvent();
         addEndBtnClickEvent();
-        setVisible(true);
     }
 
-
-    private void addGribBtnClickEvent(JButton button) {
+    private void addGridBtnClickEvent(JButton button) {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -89,37 +94,20 @@ public class UIClient extends JFrame {
         });
     }
 
-
-    private void addEndBtnClickEvent() {
-        btnEnd.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (genarationUpdateThread == null) {
-                    return;
-                }
-                if (isRunning) {
-                    changeUIStateToStop();
-                }
-
-            }
-        });
-    }
-
     private void addStartBtnClickEvent() {
         btnStart.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (genarationUpdateThread != null) {
+                if (generationUpdateThread != null) {
                     isRunning = false;
                 }
-                genarationUpdateThread = new GenarationUpdateThread();
+                generationUpdateThread = new GenerationUpdateThread();
 
-                genarationUpdateThread.start();
+                generationUpdateThread.start();
                 changeUIStateToStart();
             }
         });
     }
-
 
     private void addNextBtnClickEvent() {
         btnNext.addMouseListener(new MouseAdapter() {
@@ -129,6 +117,21 @@ public class UIClient extends JFrame {
                     JOptionPane.showMessageDialog(null, "Cells Has Stop Update!");
                 }
                 updateGridsColorByCells();
+            }
+        });
+    }
+
+    private void addEndBtnClickEvent() {
+        btnEnd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (generationUpdateThread == null) {
+                    return;
+                }
+                if (isRunning) {
+                    changeUIStateToStop();
+                }
+
             }
         });
     }
@@ -157,7 +160,7 @@ public class UIClient extends JFrame {
         }
     }
 
-    class GenarationUpdateThread extends Thread {
+    class GenerationUpdateThread extends Thread {
         @Override
         public void run() {
             while (isRunning) {
@@ -176,7 +179,6 @@ public class UIClient extends JFrame {
         }
     }
 
-
     private void changeUIStateToStart() {
         isRunning = true;
         btnStart.setEnabled(false);
@@ -191,7 +193,6 @@ public class UIClient extends JFrame {
 
     public static void main(String[] args) {
         Plane plane = new Plane();
-//        plane.setAliveCells();
         new UIClient(plane);
     }
 }

@@ -8,10 +8,8 @@ import java.util.List;
  */
 public class Plane {
 
-
-
-    private static final int WIDTH = 20;
-    private static final int HEIGHT = 20;
+    private static final int WIDTH = 40;
+    private static final int HEIGHT = 40;
     private List<Cell> cells = new ArrayList<>();
 
     public Plane() {
@@ -38,16 +36,13 @@ public class Plane {
         return cells.get(getIndex(x, y));
     }
 
-
     public Cell getCellWithIndex(int index) {
         return cells.get(index);
     }
 
-
     private static int getIndex(int x, int y) {
         return y * WIDTH + x;
     }
-
 
     public static int getValueWithLowBorder(int value, int lowBorder) {
         if (value < lowBorder) {

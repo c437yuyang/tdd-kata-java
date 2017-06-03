@@ -55,8 +55,8 @@ public class PlaneTest {
 
     @Test
     public void getWidthandHeight() {
-        assertTrue(Plane.getHEIGHT() == 20);
-        assertTrue(Plane.getWIDTH() == 20);
+        assertTrue(Plane.getHEIGHT() == 40);
+        assertTrue(Plane.getWIDTH() == 40);
     }
 
 
