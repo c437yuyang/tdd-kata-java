@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -22,7 +23,12 @@ public class UIClient extends JFrame {
     private Plane plane;
     private List<JButton> btnGrids = new ArrayList<>();
     private JButton btnNext = new JButton();
+    private JButton btnStart = new JButton();
+    private JButton btnEnd = new JButton();
+    private boolean isRunning = false;
     private Generation generation;
+
+    private GenarationUpdateThread genarationUpdateThread;
 
     public UIClient(Plane plane) {
         super();
@@ -43,7 +49,14 @@ public class UIClient extends JFrame {
         add(panelControl, BorderLayout.AFTER_LAST_LINE);
 
         btnNext.setText("Next Generation");
+        btnStart.setText("Start");
+        btnEnd.setText("End");
+        btnEnd.setEnabled(false);
+
         panelControl.add(btnNext);
+        panelControl.add(btnStart);
+        panelControl.add(btnEnd);
+
         panelGrids.setLayout(new GridLayout(rows, cols));
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -52,15 +65,17 @@ public class UIClient extends JFrame {
             JButton button = new JButton();
             btnGrids.add(button);
             panelGrids.add(button);
-            addButtonClickEvent(button);
+            addGribBtnClickEvent(button);
         }
         updateGridsColorByCells();
-        addNextClickEvent();
+        addStartBtnClickEvent();
+        addNextBtnClickEvent();
+        addEndBtnClickEvent();
         setVisible(true);
     }
 
 
-    private void addButtonClickEvent(JButton button) {
+    private void addGribBtnClickEvent(JButton button) {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -74,10 +89,42 @@ public class UIClient extends JFrame {
     }
 
 
-    private void addNextClickEvent() {
+    private void addEndBtnClickEvent() {
+        btnEnd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (genarationUpdateThread == null) {
+                    return;
+                }
+                if (isRunning) {
+                    changeUIStateToStop();
+                }
+
+            }
+        });
+    }
+
+    private void addStartBtnClickEvent() {
+        btnStart.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (genarationUpdateThread != null) {
+                    isRunning = false;
+                }
+                genarationUpdateThread = new GenarationUpdateThread();
+
+                genarationUpdateThread.start();
+                changeUIStateToStart();
+            }
+        });
+    }
+
+
+    private void addNextBtnClickEvent() {
         btnNext.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
                 generation.updateCellsState();
                 updateGridsColorByCells();
             }
@@ -106,6 +153,38 @@ public class UIClient extends JFrame {
         } else {
             return CellState.ALIVE;
         }
+    }
+
+    class GenarationUpdateThread extends Thread {
+        @Override
+        public void run() {
+            while (isRunning) {
+                if (!generation.updateCellsState()) {
+                    JOptionPane.showMessageDialog(null, "Cells Has Stop Update!");
+                    changeUIStateToStop();
+                    break;
+                }
+                updateGridsColorByCells();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    private void changeUIStateToStart() {
+        isRunning = true;
+        btnStart.setEnabled(false);
+        btnEnd.setEnabled(true);
+    }
+
+    private void changeUIStateToStop() {
+        isRunning = false;
+        btnStart.setEnabled(true);
+        btnEnd.setEnabled(false);
     }
 
 

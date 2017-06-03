@@ -14,7 +14,7 @@ public class Generation {
     }
 
 
-    public void updateCellsState() {
+    public boolean updateCellsState() {
 
         List<Cell> cellsBackUp = plane.backUpCurrentCells();
 
@@ -25,9 +25,43 @@ public class Generation {
             CellState nextState = Rule.getNextStateByRule(oldCell.getCellState(), neighborCount);
             currentCell.setCellState(nextState);
         }
+        if (checkStopUpdate(cellsBackUp, plane.backUpCurrentCells())) {
+            return false;
+        }
+
+        return true;
+
+
     }
 
+    //停止进化了
+    private static boolean checkStopUpdate(List<Cell> oldCells, List<Cell> newCells) {
+        boolean result = true;
+        if (oldCells.size() != newCells.size()) {
+            result = false;
+        }
+        for (int i = 0; i != oldCells.size(); ++i) {
+            if (!checkCellEqual(oldCells.get(i), newCells.get(i))) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
 
+    public static boolean checkCellEqual(Cell cell1, Cell cell2) {
+        boolean result = true;
+        if (cell1.getX() != cell2.getX()) {
+            result = false;
+        }
+        if (cell1.getY() != cell2.getY()) {
+            result = false;
+        }
+        if (cell1.getCellState() != cell2.getCellState()) {
+            result = false;
+        }
+        return result;
+    }
 
 
 }
