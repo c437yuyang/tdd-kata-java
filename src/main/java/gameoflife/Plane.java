@@ -8,8 +8,8 @@ import java.util.List;
  */
 public class Plane {
 
-    private static final int WIDTH = 20;
-    private static final int HEIGHT = 20;
+    private static final int WIDTH = 11;
+    private static final int HEIGHT = 11;
     private List<Cell> cells = new ArrayList<>();
 
     public Plane() {
@@ -29,19 +29,25 @@ public class Plane {
         return cells.get(getIndex(x, y));
     }
 
-    private int getIndex(int x, int y) {
+
+    public Cell getCellWithIndex(int index) {
+        return cells.get(index);
+    }
+
+
+    private static int getIndex(int x, int y) {
         return y * WIDTH + x;
     }
 
 
-    public int getValueWithLowBorder(int value, int lowBorder) {
+    public static int getValueWithLowBorder(int value, int lowBorder) {
         if (value < lowBorder) {
             return lowBorder;
         }
         return value;
     }
 
-    public int getValueWithUpBorder(int value, int upBorder) {
+    public static int getValueWithUpBorder(int value, int upBorder) {
         if (value > upBorder) {
             return upBorder;
         }
@@ -49,7 +55,8 @@ public class Plane {
     }
 
 
-    public int getAliveNeighbors(Cell cell) {
+    //必须根据备份(没变化的)Cells进行判断
+    public static int getAliveNeighbors(Cell cell, List<Cell> listCells) {
         int aliveNum = 0;
         int xLeft = getValueWithLowBorder(cell.getX() - 1, 0);
         int xRight = getValueWithUpBorder(cell.getX() + 1, WIDTH - 1);
@@ -61,7 +68,7 @@ public class Plane {
                 if (i == cell.getX() && j == cell.getY()) {
                     continue;
                 }
-                if (cells.get(getIndex(i, j)).getCellState() == CellState.ALIVE) {
+                if (listCells.get(getIndex(i, j)).getCellState() == CellState.ALIVE) {
                     aliveNum++;
                 }
             }
@@ -81,15 +88,29 @@ public class Plane {
         getCellWithXandY(2, 10).setCellState(CellState.ALIVE);
     }
 
+
+
     public List<Cell> backUpCurrentCells() {
         List<Cell> list = new ArrayList<>();
 
         for (int i = 0; i != cells.size(); ++i) {
             Cell item = cells.get(i);
-            Cell newCell = new Cell(item.getX(),item.getY(),item.getCellState());
+            Cell newCell = new Cell(item.getX(), item.getY(), item.getCellState());
             list.add(newCell);
         }
         return list;
     }
+
+
+    //输出矩阵形式的存活信息
+    public void printCellsStates() {
+        for (int i = 0; i != HEIGHT; ++i) {
+            for (int j = 0; j != WIDTH; ++j) {
+                System.out.print(getCellWithXandY(j, i).getCellState().toString() + "\t");
+            }
+            System.out.println();
+        }
+    }
+
 
 }

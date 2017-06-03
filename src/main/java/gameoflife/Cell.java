@@ -8,8 +8,6 @@ public final class Cell {
     private final int y;
     private CellState cellState;
 
-
-
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
@@ -23,9 +21,6 @@ public final class Cell {
         cellState = state;
     }
 
-    public static Cell onXAndY(int x, int y) {
-        return new Cell(x, y);
-    }
 
     public int getX() {
         return x;
@@ -42,16 +37,6 @@ public final class Cell {
     public void setCellState(CellState cellState) {
         this.cellState = cellState;
     }
-
-//    public int computeAliveNeighbors() {
-//        int aliveNeighbors = 0;
-//        for (int i = this.y - 1; i <= this.y + 1; ++i) {
-//            for (int j = this.x - 1; j <= this.x + 1; ++j) {
-//                if()
-//            }
-//        }
-//    }
-
 
     @Override
     public boolean equals(Object obj) {

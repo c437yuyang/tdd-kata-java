@@ -5,7 +5,7 @@ package gameoflife;
  */
 public class Rule {
 
-    public static CellState nextState(CellState currentState, int aliveNeighbors) {
+    public static CellState getNextStateByRule(CellState currentState, int aliveNeighbors) {
         CellState result = currentState;
         if ((currentState == CellState.ALIVE && (aliveNeighbors <= 1 || aliveNeighbors > 3))) {
             result = CellState.DEAD;
