@@ -81,5 +81,15 @@ public class Plane {
         getCellWithXandY(2, 10).setCellState(CellState.ALIVE);
     }
 
+    public List<Cell> backUpCurrentCells() {
+        List<Cell> list = new ArrayList<>();
+
+        for (int i = 0; i != cells.size(); ++i) {
+            Cell item = cells.get(i);
+            Cell newCell = new Cell(item.getX(),item.getY(),item.getCellState());
+            list.add(newCell);
+        }
+        return list;
+    }
 
 }
