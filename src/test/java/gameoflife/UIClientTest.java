@@ -13,12 +13,11 @@ public class UIClientTest {
     @Test
     public void testUICleint() {
         Plane plane = new Plane();
-        plane.setAliveCells();
+//        plane.setAliveCells();
         new UIClient(plane);
         try {
-            Thread.sleep(50000);
+            Thread.sleep(500000);
         } catch (InterruptedException e) {
-// TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
