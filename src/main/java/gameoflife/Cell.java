@@ -40,4 +40,14 @@ public final class Cell {
     public void setCellState(CellState cellState) {
         this.cellState = cellState;
     }
+
+//    public int computeAliveNeighbors() {
+//        int aliveNeighbors = 0;
+//        for (int i = this.y - 1; i <= this.y + 1; ++i) {
+//            for (int j = this.x - 1; j <= this.x + 1; ++j) {
+//                if()
+//            }
+//        }
+//    }
+
 }
