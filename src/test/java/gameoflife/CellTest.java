@@ -2,6 +2,7 @@ package gameoflife;
 
 
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 /**
@@ -24,6 +25,11 @@ public class CellTest {
     public void getCellState() throws Exception {
         Cell cell = new Cell(10, 10, CellState.ALIVE);
         assertTrue(cell.getCellState() == CellState.ALIVE);
+        assertTrue(cell.getCellState() == CellState.valueOf("ALIVE"));
+        assertTrue(cell.getCellState() == CellState.values()[0]);
+
+
     }
+
 
 }

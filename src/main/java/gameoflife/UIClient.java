@@ -52,17 +52,15 @@ public class UIClient extends JFrame {
             JButton button = new JButton();
             btnGrids.add(button);
             panelGrids.add(button);
-            addButtonClickEvent(button, plane);
+            addButtonClickEvent(button);
         }
-
-        updateGridsColorByCells(plane);
-
-        addNextClickEvent(plane);
+        updateGridsColorByCells();
+        addNextClickEvent();
         setVisible(true);
     }
 
 
-    private void addButtonClickEvent(JButton button, Plane plane) {
+    private void addButtonClickEvent(JButton button) {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -76,17 +74,17 @@ public class UIClient extends JFrame {
     }
 
 
-    private void addNextClickEvent(final Plane plane) {
+    private void addNextClickEvent() {
         btnNext.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 generation.updateCellsState();
-                updateGridsColorByCells(plane);
+                updateGridsColorByCells();
             }
         });
     }
 
-    private void updateGridsColorByCells(Plane plane) {
+    private void updateGridsColorByCells() {
         for (int i = 0; i < btnGrids.size(); i++) {
             Cell relCell = plane.getCellWithIndex(i);
             setGridColorByRelativeCell(relCell);
@@ -101,16 +99,6 @@ public class UIClient extends JFrame {
             btnGrids.get(cell.getY() * Plane.getWIDTH() + cell.getX()).setBackground(Color.white);
         }
     }
-
-//    private void addClickListener(JButton jButton,Plane plane) {
-//        Cell relCell =
-//        jButton.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//
-//            }
-//        });
-//    }
 
     public CellState reverseState(CellState cellState) {
         if (cellState == CellState.ALIVE) {

@@ -9,11 +9,6 @@ public class Generation {
 
     private Plane plane;
 
-    public Generation() {
-        this.plane = new Plane();
-    }
-
-
     public Generation(Plane plane) {
         this.plane = plane;
     }

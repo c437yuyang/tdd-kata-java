@@ -30,5 +30,10 @@ public class RuleTest {
         assertTrue(Rule.getNextStateByRule(CellState.DEAD, 5) == CellState.DEAD);
     }
 
+    @Test
+    public void constructRule() {
+        Rule rule = new Rule();
+    }
+
 
 }

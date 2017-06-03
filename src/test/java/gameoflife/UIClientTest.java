@@ -1,8 +1,9 @@
 package gameoflife;
 
-import org.junit.Test;
 
-//import static org.junit.Assert.*;
+//import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * Created by Peng on 2017/6/3.
@@ -21,5 +22,8 @@ public class UIClientTest {
             e.printStackTrace();
         }
     }
+
+
+
 
 }
