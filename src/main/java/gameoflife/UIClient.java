@@ -78,8 +78,17 @@ public class UIClient extends JFrame {
 
     private void addGribBtnClickEvent(JButton button) {
         button.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                int index = btnGrids.indexOf(button);
+//                Cell relCell = plane.getCellWithIndex(index);
+//                CellState currentState = relCell.getCellState();
+//                relCell.setCellState(reverseState(currentState));
+//                setGridColorByRelativeCell(relCell);
+//            }
+
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 int index = btnGrids.indexOf(button);
                 Cell relCell = plane.getCellWithIndex(index);
                 CellState currentState = relCell.getCellState();
@@ -167,7 +176,7 @@ public class UIClient extends JFrame {
                 }
                 updateGridsColorByCells();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -187,6 +196,4 @@ public class UIClient extends JFrame {
         btnStart.setEnabled(true);
         btnEnd.setEnabled(false);
     }
-
-
 }
