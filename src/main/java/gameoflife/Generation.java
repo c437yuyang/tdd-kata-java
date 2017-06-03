@@ -35,7 +35,7 @@ public class Generation {
     }
 
     //停止进化了
-    private static boolean checkStopUpdate(List<Cell> oldCells, List<Cell> newCells) {
+    public static boolean checkStopUpdate(List<Cell> oldCells, List<Cell> newCells) {
         boolean result = true;
         if (oldCells.size() != newCells.size()) {
             result = false;
@@ -62,6 +62,8 @@ public class Generation {
         }
         return result;
     }
+
+
 
 
 }

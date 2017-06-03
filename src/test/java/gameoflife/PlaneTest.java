@@ -53,5 +53,11 @@ public class PlaneTest {
 //        assertTrue(plane.getCellWithXandY(9, 8).equals(new Cell(9, 8)));
     }
 
+    @Test
+    public void getWidthandHeight() {
+        assertTrue(Plane.getHEIGHT() == 20);
+        assertTrue(Plane.getWIDTH() == 20);
+    }
+
 
 }
